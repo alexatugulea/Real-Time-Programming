@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  rtp-broker:
+    container_name: rtp-broker-1
+    build:
+      context: broker
+    ports:
+      - 4040:4040
+  rtp-main-app:
+    container_name: rtp-main-app
+    build:
+      context: client
+    depends_on:
+      - rtp-tweets-faf18x
+      - rtp-subscriber
+  rtp-tweets-faf18x:
+    image: alexburlacu/rtp-server:faf18x
+    container_name: rtp-tweets-faf18x
+    ports:
+      - 4000:4000
+  rtp-subscriber:
+    container_name: rtp-subscriber
+    build:
+      context: my_custom_client
